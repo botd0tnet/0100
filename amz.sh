@@ -33,10 +33,6 @@ then
 	exit 1
 fi
 
-##Get ipv6
-
-host=`curl -sS v6.icanhazip.com`
-host2=${host::-1}
 	
 ## Full install, config and launch of the nym-mixnode
 
@@ -115,7 +111,7 @@ then
 	printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 	# borrows a shell for nym user to initialize the node config.
 	printf "%b\n\n\n"
-	printf "%b\n\n\n" "${WHITE}  Your node has id ${YELLOW} 'NymMixNode' ${WHITE} located in ${LBLUE} $location1 ${WHITE} with ip ${YELLOW} $ip_addr ${WHITE}... "
+	printf "%b\n\n\n" "${WHITE}  Your node has id ${YELLOW} 'NymMixNode' ${WHITE} with ip ${YELLOW} $ip_addr ${WHITE}... "
 	printf "%b\n\n\n" "${WHITE} Config was ${LGREEN} built successfully ${WHITE}!"
 else
 	printf "%b\n\n\n" "${WHITE} Something went ${RED} wrong {WHITE}..."
