@@ -89,8 +89,8 @@ directory='NymMixNode'
 	printf '%s\n' "Description=Nym Mixnode (0.10.0)" >> /etc/systemd/system/nym-mixnode1.service
 	printf '%s\n' "" >> /etc/systemd/system/nym-mixnode1.service
 	printf '%s\n' "[Service]" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "User=nym" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "ExecStart=/home/nym/nym-mixnode_linux_x86_64 run --id NymMixNode" >> /etc/systemd/system/nym-mixnode1.service
+	printf '%s\n' "User=nym1" >> /etc/systemd/system/nym-mixnode1.service
+	printf '%s\n' "ExecStart=/home/nym1/nym-mixnode_linux_x86_64 run --id NymMixNode" >> /etc/systemd/system/nym-mixnode1.service
 	printf '%s\n' "KillSignal=SIGINT" >> /etc/systemd/system/nym-mixnode1.service				
 	printf '%s\n' "Restart=on-failure" >> /etc/systemd/system/nym-mixnode1.service
 	printf '%s\n' "RestartSec=30" >> /etc/systemd/system/nym-mixnode1.service
