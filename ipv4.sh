@@ -104,10 +104,7 @@ then
 	rand1=$[$RANDOM % ${#layer[@]}]
 	layer1=${layer[$rand1]}
 	printf "%b\n\n\n" "${WHITE} Layer: ${YELLOW} ${layer1} "
-	sleep 1    
-	printf "%b\n\n\n" "${WHITE} Ipv6: ${YELLOW} ${ahost} "
-	printf "%b\n\n\n" "${WHITE}"
-	sleep 1    
+	sleep 1      
 	sudo -u nym -H ./nym-mixnode_linux_x86_64 init --id 'NymMixNode' --host $ip_addr --layer $layer1 
 	printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 	# borrows a shell for nym user to initialize the node config.
