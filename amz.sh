@@ -108,7 +108,7 @@ then
 	layer1=${layer[$rand1]}
 	printf "%b\n\n\n" "${WHITE} Layer: ${YELLOW} ${layer1} "
 	sleep 1    
-	printf "%b\n\n\n" "${WHITE} Ipv6: ${YELLOW} ${ahost} "
+	printf "%b\n\n\n" "${WHITE} Announce IP: ${YELLOW} ${ahost} "
 	printf "%b\n\n\n" "${WHITE}"
 	sleep 1    
 	sudo -u nym -H ./nym-mixnode_linux_x86_64 init --id 'NymMixNode' --host $ahost --announce-host $ip_addr --layer $layer1 
