@@ -84,39 +84,42 @@ fi
 #	nym_systemd_print
 printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 printf "%b\n\n\n" "${YELLOW} Creating ${WHITE} a systemd service file to run nym-mixnode in the background: "
-directory='NymMixNode'
-	printf '%s\n' "[Unit]" > /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "Description=Nym Mixnode (0.10.0)" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "[Service]" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "User=nym1" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "ExecStart=/home/nym1/nym-mixnode_linux_x86_64 run --id NymMixNode" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "KillSignal=SIGINT" >> /etc/systemd/system/nym-mixnode1.service				
-	printf '%s\n' "Restart=on-failure" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "RestartSec=30" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "StartLimitInterval=350" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "StartLimitBurst=10" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "LimitNOFILE=65535" >> /etc/systemd/system/nym-mixnode1.service			
-	printf '%s\n' "" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "[Install]" >> /etc/systemd/system/nym-mixnode1.service
-	printf '%s\n' "WantedBy=multi-user.target" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "[Unit]" > /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "Description=Nym Mixnode (0.10.0)" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "[Service]" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "User=nym1" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "ExecStart=/home/nym1/nym-mixnode_linux_x86_64 run --id NymMixNode" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "KillSignal=SIGINT" >> /etc/systemd/system/nym-mixnode1.service				
+printf '%s\n' "Restart=on-failure" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "RestartSec=30" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "StartLimitInterval=350" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "StartLimitBurst=10" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "LimitNOFILE=65535" >> /etc/systemd/system/nym-mixnode1.service			
+printf '%s\n' "" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "[Install]" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "WantedBy=multi-user.target" >> /etc/systemd/system/nym-mixnode1.service
 	
-	kitu=$(pwgen 13 1)
-	telegram=@${kitu}
-	location=(Nuremberg Helsinki CapeTown Dubai Iowa Frankfurt Toronto Netherlands Berlin Bayern London Toulouse Amsterdam Nuremberg Virginia Montreal Miami Stockholm Tokyo Barcelona Singapore)
-	rand=$[$RANDOM % ${#location[@]}]
-	location1=${location[$rand]}	
-	printf '%s\n' "nym1" >> /root/data.txt
-	printf '%s\n' "${telegram}" >> /root/data.txt
-	printf '%s\n' "$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_identity.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
-	printf '%s\n' "$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_sphinx.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
-	printf '%s\n' "[${host}]:1789" >> /root/data.txt
-	printf '%s\n' "$(sudo cat /home/nym1/.nym/mixnodes/NymMixNode/config/config.toml | grep layer | cut -d'=' -f 2)" >> /root/data.txt
-	printf '%s\n' "${location1}" >> /root/data.txt	
-	printf '%s\n' "$(sudo /home/nym1/nym-mixnode_linux_x86_64  sign --id /home/nym1/.nym/mixnodes/NymMixNode --text ${telegram} | grep -i "/claim")" >> /root/data.txt
-	printf '%s\n' "" >> /root/data.txt
-  	printf '%s\n' "---" >> /root/data.txt	
-  	printf '%s\n' "" >> /root/data.txt	
+kitu=$(pwgen 13 1)
+telegram=@${kitu}
+location=(Nuremberg Helsinki CapeTown Dubai Iowa Frankfurt Toronto Netherlands Berlin Bayern London Toulouse Amsterdam Nuremberg Virginia Montreal Miami Stockholm Tokyo Barcelona Singapore)
+rand=$[$RANDOM % ${#location[@]}]
+location1=${location[$rand]}
+	
+cat >> /root/data.txt <<EOF
+
+nym1
+${telegram}
+$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_identity.pem |  openssl base64 -A -d | base58 ; echo)
+$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_sphinx.pem |  openssl base64 -A -d | base58 ; echo)
+[${host}]:1789
+$(sudo cat /home/nym1/.nym/mixnodes/NymMixNode/config/config.toml | grep layer | cut -d'=' -f 2)
+${location1}
+$(sudo /home/nym1/nym-mixnode_linux_x86_64  sign --id /home/nym1/.nym/mixnodes/NymMixNode --text ${telegram} | grep -i "/claim")
+
+---
+EOF
+	
 if [ -e /etc/systemd/system/nym-mixnode1.service ]
 then
 	printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
