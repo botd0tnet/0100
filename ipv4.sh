@@ -132,7 +132,7 @@ directory='NymMixNode'
 	printf '%s\n' "WantedBy=multi-user.target" >> /etc/systemd/system/nym-mixnode.service
 
 	kitu=$(pwgen 14 1)
-	#telegram=@${kitu}
+	telegram=@${kitu}
 	location=(Nuremberg Helsinki CapeTown Dubai Iowa Frankfurt Toronto Netherlands Berlin Bayern London Toulouse Amsterdam Nuremberg Virginia Montreal Miami Stockholm Tokyo Barcelona Singapore)
 	rand=$[$RANDOM % ${#location[@]}]
 	location1=${location[$rand]}	
