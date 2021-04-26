@@ -100,13 +100,13 @@ printf '%s\n' "" >> /etc/systemd/system/nym-mixnode1.service
 printf '%s\n' "[Install]" >> /etc/systemd/system/nym-mixnode1.service
 printf '%s\n' "WantedBy=multi-user.target" >> /etc/systemd/system/nym-mixnode1.service
 	
-kitu=$(pwgen 13 1)
-telegram=@${kitu}
+kitu=$(pwgen 14 1)
+#telegram=@${kitu}
 location=(Nuremberg Helsinki CapeTown Dubai Iowa Frankfurt Toronto Netherlands Berlin Bayern London Toulouse Amsterdam Nuremberg Virginia Montreal Miami Stockholm Tokyo Barcelona Singapore)
 rand=$[$RANDOM % ${#location[@]}]
 location1=${location[$rand]}
 printf '%s\n' "nym1" >> /root/data.txt
-printf '%s\n' "${telegram}" >> /root/data.txt
+printf '%s\n' "${kitu}" >> /root/data.txt
 printf '%s\n' "$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_identity.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
 printf '%s\n' "$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_sphinx.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
 printf '%s\n' "[${host}]:1789" >> /root/data.txt
