@@ -106,7 +106,7 @@ directory='NymMixNode'
 	location=(Nuremberg Helsinki CapeTown Dubai Iowa Frankfurt Toronto Netherlands Berlin Bayern London Toulouse Amsterdam Nuremberg Virginia Montreal Miami Stockholm Tokyo Barcelona Singapore)
 	rand=$[$RANDOM % ${#location[@]}]
 	location1=${location[$rand]}	
-	printf '%s\n' "${nym}" >> /root/data.txt
+	printf '%s\n' "nym1" >> /root/data.txt
 	printf '%s\n' "${telegram}" >> /root/data.txt
 	printf '%s\n' "$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_identity.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
 	printf '%s\n' "$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_sphinx.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
