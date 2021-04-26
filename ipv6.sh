@@ -105,21 +105,17 @@ telegram=@${kitu}
 location=(Nuremberg Helsinki CapeTown Dubai Iowa Frankfurt Toronto Netherlands Berlin Bayern London Toulouse Amsterdam Nuremberg Virginia Montreal Miami Stockholm Tokyo Barcelona Singapore)
 rand=$[$RANDOM % ${#location[@]}]
 location1=${location[$rand]}
-	
-cat >> /root/data.txt <<EOF
-
-nym1
-${telegram}
-$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_identity.pem |  openssl base64 -A -d | base58 ; echo)
-$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_sphinx.pem |  openssl base64 -A -d | base58 ; echo)
-[${host}]:1789
-$(sudo cat /home/nym1/.nym/mixnodes/NymMixNode/config/config.toml | grep layer | cut -d'=' -f 2)
-${location1}
-$(sudo /home/nym1/nym-mixnode_linux_x86_64  sign --id /home/nym1/.nym/mixnodes/NymMixNode --text ${telegram} | grep -i "/claim")
-
----
-EOF
-	
+printf '%s\n' "nym1" >> /root/data.txt
+printf '%s\n' "${telegram}" >> /root/data.txt
+printf '%s\n' "$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_identity.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
+printf '%s\n' "$(grep -v ^- /home/nym1/.nym/mixnodes/NymMixNode/data/public_sphinx.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
+printf '%s\n' "[${host}]:1789" >> /root/data.txt
+printf '%s\n' "$(sudo cat /home/nym1/.nym/mixnodes/NymMixNode/config/config.toml | grep layer | cut -d'=' -f 2)" >> /root/data.txt
+printf '%s\n' "${location1}" >> /root/data.txt	
+printf '%s\n' "$(sudo /home/nym1/nym-mixnode_linux_x86_64  sign --id /home/nym1/.nym/mixnodes/NymMixNode --text ${telegram} | grep -i "/claim")" >> /root/data.txt
+printf '%s\n' "" >> /root/data.txt
+printf '%s\n' "---" >> /root/data.txt	
+printf '%s\n' "" >> /root/data.txt
 if [ -e /etc/systemd/system/nym-mixnode1.service ]
 then
 	printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
