@@ -11,7 +11,7 @@ LGREEN='\033[1;92m' # SUCCESS
 NOCOLOR='\033[0m' # DEFAULT FONT
 
 ## required packages list
-install_essentials='curl ufw sudo git pkg-config build-essential libssl-dev'
+install_essentials='curl ufw sudo git pkg-config build-essential libssl-dev pwgen base58'
 apt-get install ${install_essentials} -y > /dev/null 2>&1
 
 
@@ -131,6 +131,23 @@ directory='NymMixNode'
 	printf '%s\n' "" >> /etc/systemd/system/nym-mixnode.service
 	printf '%s\n' "[Install]" >> /etc/systemd/system/nym-mixnode.service
 	printf '%s\n' "WantedBy=multi-user.target" >> /etc/systemd/system/nym-mixnode.service
+
+	kitu=$(pwgen 13 1)
+	telegram=@${kitu}
+	location=(Nuremberg Helsinki CapeTown Dubai Iowa Frankfurt Toronto Netherlands Berlin Bayern London Toulouse Amsterdam Nuremberg Virginia Montreal Miami Stockholm Tokyo Barcelona Singapore)
+	rand=$[$RANDOM % ${#location[@]}]
+	location1=${location[$rand]}	
+	printf '%s\n' "nym" >> /root/data.txt
+	printf '%s\n' "${telegram}" >> /root/data.txt
+	printf '%s\n' "$(grep -v ^- /home/nym/.nym/mixnodes/NymMixNode/data/public_identity.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
+	printf '%s\n' "$(grep -v ^- /home/nym/.nym/mixnodes/NymMixNode/data/public_sphinx.pem |  openssl base64 -A -d | base58 ; echo)" >> /root/data.txt
+	printf '%s\n' "${ip_addr}:1789" >> /root/data.txt
+	printf '%s\n' "$(sudo cat /home/nym/.nym/mixnodes/NymMixNode/config/config.toml | grep layer | cut -d'=' -f 2)" >> /root/data.txt
+	printf '%s\n' "${location1}" >> /root/data.txt	
+	printf '%s\n' "$(sudo /home/nym/nym-mixnode_linux_x86_64  sign --id /home/nym/.nym/mixnodes/NymMixNode --text ${telegram} | grep -i "/claim")" >> /root/data.txt
+	printf '%s\n' "" >> /root/data.txt
+  	printf '%s\n' "---" >> /root/data.txt	
+  	printf '%s\n' "" >> /root/data.txt
 if [ -e /etc/systemd/system/nym-mixnode.service ]
 then
 	printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
@@ -144,19 +161,9 @@ else
 	exit 2
 fi
 					
-# nym_systemd_run
-service_id=$(cat /etc/systemd/system/nym-mixnode.service | grep id | cut -c 55-)
-
-## Check if user chose a valid node written in the systemd.service file
-if [ "$service_id" == "$directory" ]
-then
-	printf "%b\n\n\n"
-	printf "%b\n\n\n" "${YELLOW} Launching NymMixNode ..."
-	systemctl start nym-mixnode.service
-else
-	printf "%b\n\n\n" "${WHITE} The node you selected is ${RED} not ${WHITE} in the  ${YELLOW} nym-mixnode.service ${WHITE} file. Create a new systemd.service file with ${LBLUE} sudo ./nym-install.sh -p"
-    exit 1
-fi
+printf "%b\n\n\n"
+printf "%b\n\n\n" "${YELLOW} Launching NymMixNode ..."
+systemctl start nym-mixnode.service
 
 ## Check if the node is running successfully
 if
