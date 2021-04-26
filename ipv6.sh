@@ -101,7 +101,7 @@ printf '%s\n' "[Install]" >> /etc/systemd/system/nym-mixnode1.service
 printf '%s\n' "WantedBy=multi-user.target" >> /etc/systemd/system/nym-mixnode1.service
 	
 kitu=$(pwgen 14 1)
-#telegram=@${kitu}
+telegram=@${kitu}
 location=(Nuremberg Helsinki CapeTown Dubai Iowa Frankfurt Toronto Netherlands Berlin Bayern London Toulouse Amsterdam Nuremberg Virginia Montreal Miami Stockholm Tokyo Barcelona Singapore)
 rand=$[$RANDOM % ${#location[@]}]
 location1=${location[$rand]}
