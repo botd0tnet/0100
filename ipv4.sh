@@ -77,7 +77,7 @@ printf "%b\n\n\n" "${WHITE} ----------------------------------------------------
 printf "%b\n\n\n" "${WHITE} Changed ownership of all conentes in ${YELLOW}/home/nym/ ${WHITE} to ${YELLOW}nym:nym"
 	 	 
 #    nym_init
-ip_addr=`curl -sS icanhazip.com`
+ip_addr=`curl -sS ipv4.icanhazip.com`
 	
 printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 printf "%b\n\n\n" "${YELLOW} Configuration ${WHITE} file and keys: "
