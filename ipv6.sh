@@ -39,7 +39,7 @@ then
 	then
 		printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 		printf "%b\n\n\n" "${YELLOW} Downloading ${WHITE} nym-mixnode binaries for the nym1 user ..."
-		cd /home/nym1 && curl -LO https://github.com/nymtech/nym/releases/download/v0.10.0/nym-mixnode_linux_x86_64
+		cd /home/nym1 && curl -LO https://github.com/nymtech/nym/releases/download/v0.10.1/nym-mixnode_linux_x86_64
 		printf "%b\n\n\n"
 		printf "%b\n\n\n" "${WHITE} nym-mixnode binaries ${LGREEN} successfully downloaded ${WHITE}!"
 		chmod 755 /home/nym1/nym-mixnode_linux_x86_64
@@ -53,7 +53,7 @@ fi
 	 	 
 #    nym_init
 
-host=`curl -sS v6.icanhazip.com`	
+host=$(hostname -I | egrep -o '[0-9a-z:]+:[0-9a-z:]+' | head -n 1)	
 
 printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 printf "%b\n\n\n" "${YELLOW} Configuration ${WHITE} file and keys: "
@@ -85,7 +85,7 @@ fi
 printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 printf "%b\n\n\n" "${YELLOW} Creating ${WHITE} a systemd service file to run nym-mixnode in the background: "
 printf '%s\n' "[Unit]" > /etc/systemd/system/nym-mixnode1.service
-printf '%s\n' "Description=Nym Mixnode (0.10.0)" >> /etc/systemd/system/nym-mixnode1.service
+printf '%s\n' "Description=Nym Mixnode (0.11.0)" >> /etc/systemd/system/nym-mixnode1.service
 printf '%s\n' "" >> /etc/systemd/system/nym-mixnode1.service
 printf '%s\n' "[Service]" >> /etc/systemd/system/nym-mixnode1.service
 printf '%s\n' "User=nym1" >> /etc/systemd/system/nym-mixnode1.service
