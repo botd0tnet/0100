@@ -18,13 +18,6 @@ apt-get install ${install_essentials} -y > /dev/null 2>&1
 printf "%b\n" "0D0A2020202020205F205F5F20205F2020205F205F205F5F205F5F5F0D0A20202020207C20275F205C7C207C207C207C20275F205C205F205C0D0A20202020207C207C207C207C207C5F7C207C207C207C207C207C207C0D0A20202020207C5F7C207C5F7C5C5F5F2C207C5F7C207C5F7C207C5F7C0D0A2020202020202020202020207C5F5F5F2F0D0A0D0A2020202020202020202020202028696E7374616C6C6572202D2076657273696F6E20302E31302E30290D0A" | xxd -p -r
 
 
-
-## Checks if port 1789 is enabled in firewall settings / ufw
-sudo ufw allow 1789/tcp > /dev/null 2>&1
-sudo ufw allow 22/tcp
-sudo ufw --force enable
-sudo ufw status
-
 ## display usage if the script is not run as root user
 if [[ $USER != "root" ]]
 then
@@ -57,7 +50,7 @@ then
 	then
 		printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 		printf "%b\n\n\n" "${YELLOW} Downloading ${WHITE} nym-mixnode binaries for the nym user ..."
-		cd /home/nym && curl -LO https://github.com/nymtech/nym/releases/download/v0.10.0/nym-mixnode_linux_x86_64
+		cd /home/nym && curl -LO https://github.com/nymtech/nym/releases/download/v0.10.1/nym-mixnode_linux_x86_64
 		printf "%b\n\n\n"
 		printf "%b\n\n\n" "${WHITE} nym-mixnode binaries ${LGREEN} successfully downloaded ${WHITE}!"
 	else
@@ -84,7 +77,7 @@ printf "%b\n\n\n" "${WHITE} ----------------------------------------------------
 printf "%b\n\n\n" "${WHITE} Changed ownership of all conentes in ${YELLOW}/home/nym/ ${WHITE} to ${YELLOW}nym:nym"
 	 	 
 #    nym_init
-ip_addr=`curl -sS v4.icanhazip.com`
+ip_addr=`curl -sS icanhazip.com`
 	
 printf "%b\n\n\n" "${WHITE} --------------------------------------------------------------------------------"
 printf "%b\n\n\n" "${YELLOW} Configuration ${WHITE} file and keys: "
@@ -116,7 +109,7 @@ printf "%b\n\n\n" "${WHITE} ----------------------------------------------------
 printf "%b\n\n\n" "${YELLOW} Creating ${WHITE} a systemd service file to run nym-mixnode in the background: "
 directory='NymMixNode'
 	printf '%s\n' "[Unit]" > /etc/systemd/system/nym-mixnode.service
-	printf '%s\n' "Description=Nym Mixnode (0.10.0)" >> /etc/systemd/system/nym-mixnode.service
+	printf '%s\n' "Description=Nym Mixnode (0.11.0)" >> /etc/systemd/system/nym-mixnode.service
 	printf '%s\n' "" >> /etc/systemd/system/nym-mixnode.service
 	printf '%s\n' "[Service]" >> /etc/systemd/system/nym-mixnode.service
 	printf '%s\n' "User=nym" >> /etc/systemd/system/nym-mixnode.service
